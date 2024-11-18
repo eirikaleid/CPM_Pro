@@ -2,52 +2,52 @@
 chcp 65001
 cls
 
-:: Renk Ayarı: Yeşil
+:: Color Setting: Green
 color 0A
 
-:: Başlık
+:: Title
 echo ****************************************
-echo    HIZLI YARDIM ARACI - İBRAHİM TONCA
+echo    QUICK HELP TOOL - IBRAHIM TONCA
 echo ****************************************
 
 :MENU
-echo 1. Bilgisayar Seri Numarasını, Adını, Marka ve Modelini Göster
-echo 2. IP Adresini Görüntüle
-echo 3. Windows Lisans Durumunu Göster
-echo 4. Sistem Bilgilerini Görüntüle
-echo 5. Windows Sürüm Bilgisi (winver)
-echo 6. Son Format Tarihini Göster
-echo 7. Disk Durumunu Kontrol Et
-echo 8. Windows Güncelleme Durumunu Göster
-echo 9. CPU Bilgilerini Göster
-echo 10. Bellek (RAM) Kullanımını Göster
-echo 11. Grup Politikalarını Güncelle (gpupdate /force)
-echo 12. Kullanıcı Hesaplarını Listele
-echo 13. Depolama Alanı Durumunu Göster
-echo 14. Sabit Diski Tarama (chkdsk)
-echo 15. Güvenlik Duvarını Kapat
-echo 16. Güvenlik Duvarını Aç
-echo 17. Windows Sistem Dosyalarını Onar
-echo 18. Disk Temizliği Başlat(cleanmgr)
-echo 19. Tüm Programları Güncelle
-echo 20. Windows Store Uygulamalarını Güncelle
-echo 21. Ağ DNS Önbelleğini Temizle(flushdns)
-echo 22. Gereksiz Dosyaları Temizle(temp)
-echo 23. RAM Optimizasyonu Yap
-echo 24. Ping Testi Yap
-echo 25. Tracert (Yol İzleme) Yap
-echo 26. Nslookup (DNS Sorgulaması) Yap
-echo 27. Netstat (Bağlantı Durumu) Göster
-echo 28. ARP (Adres Çözümleme Protokolü) Tablosunu Göster
-echo 29. Route (Yönlendirme Tablosu) Göster
-echo 30. Nbtstat (NetBIOS Durumu) Göster
-echo 31. IP Yapılandırmasını Görüntüle(all)
-echo 32. IP Yapılandırmasını Serbest Bırak(release)
-echo 33. IP Yapılandırmasını Yenile(renew)
-echo 34. Wi-Fi Şifresini Göster
-echo 35. Çık
+echo 1. Show Computer Serial Number, Name, Brand, and Model
+echo 2. Display IP Address
+echo 3. Show Windows License Status
+echo 4. Display System Information
+echo 5. Windows Version Information (winver)
+echo 6. Show Last Format Date
+echo 7. Check Disk Status
+echo 8. Show Windows Update Status
+echo 9. Show CPU Information
+echo 10. Show Memory (RAM) Usage
+echo 11. Update Group Policies (gpupdate /force)
+echo 12. List User Accounts
+echo 13. Show Storage Status
+echo 14. Scan Hard Drive (chkdsk)
+echo 15. Disable Firewall
+echo 16. Enable Firewall
+echo 17. Repair Windows System Files
+echo 18. Start Disk Cleanup (cleanmgr)
+echo 19. Update All Programs
+echo 20. Update Windows Store Apps
+echo 21. Clear Network DNS Cache (flushdns)
+echo 22. Clean Unnecessary Files (temp)
+echo 23. Optimize RAM
+echo 24. Perform Ping Test
+echo 25. Perform Tracert (Path Tracking)
+echo 26. Perform Nslookup (DNS Query)
+echo 27. Show Netstat (Connection Status)
+echo 28. Show ARP (Address Resolution Protocol) Table
+echo 29. Show Route (Routing Table)
+echo 30. Show Nbtstat (NetBIOS Status)
+echo 31. Display IP Configuration (all)
+echo 32. Release IP Configuration (release)
+echo 33. Renew IP Configuration (renew)
+echo 34. Show Wi-Fi Password
+echo 35. Exit
 
-set /p choice=Bir seçenek girin (1-35): 
+set /p choice=Enter an option (1-35): 
 
 if "%choice%"=="1" goto COMPUTER_INFO
 if "%choice%"=="2" goto IP
@@ -86,301 +86,38 @@ if "%choice%"=="34" goto WIFI_PASSWORD
 if "%choice%"=="35" exit
 goto MENU
 
-:: Bilgisayar Seri Numarası, Bilgisayar Adı, Marka ve Modelini Göster
+:: Show Computer Serial Number, Name, Brand, and Model
 :COMPUTER_INFO
 cls
-echo Bilgisayarın Seri Numarası:
+echo Computer Serial Number:
 wmic bios get serialnumber
 echo.
-echo Bilgisayar Adı:
+echo Computer Name:
 hostname
 echo.
-echo Marka ve Model:
+echo Brand and Model:
 wmic computersystem get manufacturer, model
 pause
 goto MENU
 
-:: IP Adresini Görüntüle
+:: Display IP Address
 :IP
 cls
-echo Bilgisayarın IP Adresi:
+echo Computer IP Address:
 ipconfig | findstr /i "IPv4"
 pause
 goto MENU
 
-:: Windows Lisans Durumunu Göster
+:: Show Windows License Status
 :LICENSE
 cls
-echo Windows Lisans Durumu:
+echo Windows License Status:
 slmgr /xpr
 echo.
-echo Windows Lisans Anahtarı:
+echo Windows Product Key:
 wmic path softwarelicensingservice get OA3xOriginalProductKey
 pause
 goto MENU
 
-:: Sistem Bilgilerini Görüntüle
-:SYSINFO
-cls
-echo Sistem Bilgileri:
-systeminfo
-pause
-goto MENU
-
-:: Windows Sürüm Bilgisi Göster (winver)
-:WINVER
-cls
-echo Windows Sürüm Bilgisi:
-winver
-pause
-goto MENU
-
-:: Son Format Tarihini Göster
-:LAST_FORMAT_DATE
-cls
-echo Son Format Tarihi:
-wmic os get installdate
-pause
-goto MENU
-
-:: Disk Durumunu Kontrol Et
-:DISK
-cls
-echo Disk Durumu:
-wmic logicaldisk get caption, description, freespace, size
-pause
-goto MENU
-
-:: Windows Güncelleme Durumunu Göster
-:WINDOWSUPDATE
-cls
-echo Windows Güncelleme Durumu:
-wmic qfe list brief /format:table
-pause
-goto MENU
-
-:: CPU Bilgilerini Göster
-:CPUINFO
-cls
-echo CPU Bilgileri:
-wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed
-pause
-goto MENU
-
-:: Bellek (RAM) Kullanımını Göster
-:MEMORY
-cls
-echo Bellek (RAM) Kullanımı:
-wmic memorychip get capacity, speed, manufacturer
-pause
-goto MENU
-
-:: Grup Politikalarını Güncelle (gpupdate /force)
-:GPUPDATE
-cls
-echo Grup Politikaları Güncelleniyor...
-gpupdate /force
-pause
-goto MENU
-
-:: Kullanıcı Hesaplarını Listele
-:USERS
-cls
-echo Kullanıcı Hesapları:
-net user
-pause
-goto MENU
-
-:: Depolama Alanı Durumunu Göster
-:STORAGE
-cls
-echo Depolama Alanı Durumu:
-wmic logicaldisk get caption, description, freespace, size
-pause
-goto MENU
-
-:: Sabit Diski Tarama (chkdsk)
-:CHKDSK
-cls
-echo Sabit diski tarıyor...
-chkdsk C: /f /r /x
-pause
-goto MENU
-
-:: Güvenlik Duvarını Kapat
-:DISABLE_FIREWALL
-cls
-echo Güvenlik Duvarı devre dışı bırakılıyor...
-netsh advfirewall set allprofiles state off
-pause
-goto MENU
-
-:: Güvenlik Duvarını Aç
-:ENABLE_FIREWALL
-cls
-echo Güvenlik Duvarı açılıyor...
-netsh advfirewall set allprofiles state on
-pause
-goto MENU
-
-:: Windows Sistem Dosyalarını Onar
-:SFC
-cls
-echo Sistem dosyaları taranıyor...
-sfc /scannow
-pause
-goto MENU
-
-:: Disk Temizliği Başlat
-:CLEANUP
-cls
-echo Disk Temizliği başlatılıyor...
-cleanmgr
-pause
-goto MENU
-
-:: Yüklü Programları Güncelle (winget)
-:UPDATE_PROGRAMS
-cls
-echo Yüklü programlar güncelleniyor...
-winget upgrade --all
-pause
-goto MENU
-
-:: Windows Store Uygulamalarını Güncelle
-:UPDATE_STORE_APPS
-cls
-echo Windows Store uygulamaları güncelleniyor...
-powershell -Command "Get-AppxPackage | Foreach {Add-AppxPackage -Path $_.InstallLocation} "
-pause
-goto MENU
-
-:: Ağ DNS Önbelleğini Temizle
-:CLEAR_DNS
-cls
-echo DNS Önbelleği temizleniyor...
-ipconfig /flushdns
-pause
-goto MENU
-
-:: Gereksiz Dosyaları Temizle
-:CLEAN_TEMP_FILES
-cls
-echo Geçici dosyalar temizleniyor...
-
-:: %TEMP% Klasöründeki Dosyaları Sil
-del /q /f /s %TEMP%\*
-
-:: %WINDIR%\Temp Klasöründeki Dosyaları Sil
-del /q /f /s %WINDIR%\Temp\*
-
-:: Windows Temp Klasörünü Temizle
-cleanmgr /sagerun:1
-
-echo Temizlik tamamlandı.
-pause
-goto MENU
-
-:: RAM Optimizasyonu Yap
-:OPTIMIZE_RAM
-cls
-echo RAM optimizasyonu yapılıyor...
-echo.
-echo Çalışan işlemler sonlandırılacak...
-echo.
-taskkill /f /im explorer.exe
-start explorer.exe
-pause
-goto MENU
-
-:: Ping Testi Yap
-:PING_TEST
-cls
-echo Ping testi yapılıyor...
-set /p ip=Ping testi yapılacak IP adresini girin: 
-ping %ip%
-pause
-goto MENU
-
-:: Tracert (Yol İzleme) Yap
-:TRACERT_TEST
-cls
-echo Tracert (Yol İzleme) başlatılıyor...
-set /p ip=Yol izlenecek IP adresini girin: 
-tracert %ip%
-pause
-goto MENU
-
-:: Nslookup (DNS Sorgulaması) Yap
-:NSLOOKUP_TEST
-cls
-echo Nslookup (DNS Sorgulaması) başlatılıyor...
-set /p domain=DNS sorgusu yapılacak domain girin: 
-nslookup %domain%
-pause
-goto MENU
-
-:: Netstat (Bağlantı Durumu) Göster
-:NETSTAT_TEST
-cls
-echo Netstat (Bağlantı Durumu) başlatılıyor...
-netstat -an
-pause
-goto MENU
-
-:: ARP Tablosunu Göster
-:ARP_TEST
-cls
-echo ARP Tablosu başlatılıyor...
-arp -a
-pause
-goto MENU
-
-:: Route Tablosunu Göster
-:ROUTE_TEST
-cls
-echo Yönlendirme Tablosu başlatılıyor...
-route print
-pause
-goto MENU
-
-:: NBTstat (NetBIOS Durumu) Göster
-:NBTSTAT_TEST
-cls
-echo NBTstat (NetBIOS Durumu) başlatılıyor...
-nbtstat -n
-pause
-goto MENU
-
-:: IP Yapılandırmasını Göster
-:IPCONFIG
-cls
-echo IP Yapılandırması:
-ipconfig
-pause
-goto MENU
-
-:: IP Yapılandırmasını Serbest Bırak
-:RELEASE_IP
-cls
-echo IP Yapılandırması serbest bırakılıyor...
-ipconfig /release
-pause
-goto MENU
-
-:: IP Yapılandırmasını Yenile
-:RENEW_IP
-cls
-echo IP Yapılandırması yenileniyor...
-ipconfig /renew
-pause
-goto MENU
-
-:: Wi-Fi Şifresini Göster
-:WIFI_PASSWORD
-cls
-echo Wi-Fi Şifresi:
-set /p wifi=Wi-Fi ağ adını girin: 
-netsh wlan show profile name="%wifi%" key=clear | findstr /i "Key Content"
-pause
-goto MENU
+:: Display System Information
+...
