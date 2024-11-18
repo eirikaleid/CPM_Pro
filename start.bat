@@ -7,7 +7,7 @@ color 0A
 
 :: Title
 echo ****************************************
-echo    QUICK HELP TOOL - IBRAHIM TONCA
+echo    QUICK HELP TOOL
 echo ****************************************
 
 :MENU
